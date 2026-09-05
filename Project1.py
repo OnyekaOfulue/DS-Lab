@@ -23,10 +23,16 @@ def grade_student(score):
 		return "D"
 	return "F"
 
+
+def separate_columns(text, separator=','):
+	"""Split a column string into separate items using the given separator."""
+	return [item.strip() for item in text.split(separator)]
+
 if __name__ == "__main__":
 	numbers = [64, 25, 12, 22, 11]
 	print("Ascending:", sort_data(numbers))
 	print("Descending:", sort_data(numbers, reverse=True))
 	print("Without null values:", remove_null_values([1, None, 3, None, 5]))
 	print("Student grade:", grade_student(85))
+	print("Separated values:", separate_columns("Alice, Bob, Charlie"))
 
