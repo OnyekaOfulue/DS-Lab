@@ -1,12 +1,17 @@
-def sort_data(data, reverse=False):
+from collections.abc import Sequence
+
+
+def sort_data(data: Sequence, reverse: bool = False) -> list:
 	"""Return the data sorted in ascending or descending order."""
 	return sorted(data, reverse=reverse)
 
-def remove_null_values(data):
+
+def remove_null_values(data: Sequence) -> list:
 	"""Return the data with all None values removed."""
 	return [value for value in data if value is not None]
 
-def grade_student(score):
+
+def grade_student(score: int | float) -> str:
 	"""Return a letter grade for a score from 0 to 100."""
 	if not isinstance(score, (int, float)) or isinstance(score, bool):
 		raise TypeError("Score must be a number.")
@@ -24,17 +29,26 @@ def grade_student(score):
 	return "F"
 
 
-def separate_columns(text, separator=','):
+def separate_columns(text: str, separator: str = ",") -> list[str]:
 	"""Split a column string into separate items using the given separator."""
+	if not isinstance(text, str):
+		raise TypeError("text must be a string.")
+	if not isinstance(separator, str) or not separator:
+		raise ValueError("separator must be a non-empty string.")
 	return [item.strip() for item in text.split(separator)]
 
 
-def build_regression_model(x_values, y_values):
+def build_regression_model(
+	x_values: Sequence[float], y_values: Sequence[float]
+) -> tuple[float, float]:
 	"""Build a simple linear regression model: y = m*x + b."""
 	if len(x_values) != len(y_values):
 		raise ValueError("x_values and y_values must be the same length.")
 	if len(x_values) < 2:
 		raise ValueError("At least two data points are required.")
+	if not all(isinstance(value, (int, float)) and not isinstance(value, bool)
+			   for value in (*x_values, *y_values)):
+		raise TypeError("x_values and y_values must contain only numbers.")
 
 	x_mean = sum(x_values) / len(x_values)
 	y_mean = sum(y_values) / len(y_values)
